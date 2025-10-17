@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+            /* url("{% static 'banner.jpg' %}") no-repeat center center/cover; */
+            min-height: 100vh;
+            color: #fff;
+        }
+        .btn-primary {
+            font-size: 0.8rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.8rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            color: #ffc107;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back Button -->
+    <a href="{% url 'login' %}" class="back-btn">
+        <i class="bi bi-arrow-left-circle-fill"></i>
+    </a>
+
+            <div class="container py-5">
+                <h2 class="text-center mb-4 text-light">Our Collections</h2>
+
+                <div class="row g-4">
+                    {% for i in obj %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 w-75 shadow-sm mt-4" style="border: none;">
+                            {% if i.item_image %}
+                            <img src="{{ i.item_image.url }}" class="card-img-top" alt="{{ i.item_name }}"
+                                style="height:370px;">
+                            {% else %}
+                            <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                style="height: 250px;">
+                                <span class="text-muted">No Image</span>
+                            </div>
+                            {% endif %}
+
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ i.item_name }}</h5>
+                                <p class="card-text text-muted" style="font-size: 0.9rem;">
+                                    {{ i.item_description|truncatewords:20 }}
+                                </p>
+
+                                <ul class="list-unstyled small mb-3 text-dark">
+                                    <li><strong>Price:</strong> ₹{{ i.item_price }}</li>
+                                    <li><strong>Gender:</strong> {{ i.gender }}</li>
+                                    <li><strong>Quantity:</strong> {{ i.quantity }}</li>
+                                    <li><strong>Size:</strong> {{ i.size_chart }}</li>
+                                    <li><strong>Color:</strong> {{ i.color }}</li>
+                                    <li><strong>Available:</strong> {{ i.available_from }} → {{ i.available_to }}</li>
+                                    <li><strong>Total Days:</strong> {{ i.available_days }}</li>
+                                </ul>
+
+                                <a href="{% url 'product_detail' i.id %}" class="btn btn-sm btn-secondary text-light">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center text-muted">
+                        No products available
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

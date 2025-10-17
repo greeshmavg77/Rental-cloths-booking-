@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Product</title>
+  {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* page background */
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: linear-gradient(rgba(187, 7, 7, 0.78), rgba(156, 5, 5, 0.78)),
+      url("{% static 'banner.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 2rem;
+    }
+
+    /* center wrapper */
+    .page-wrapper {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* card */
+    .card {
+      position: relative;
+      /* required for absolute back button */
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.97);
+      /* makes card visible over background */
+    }
+
+    .card-header {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .corner-btn {
+      position: absolute;
+      top: 12px;
+      font-size: 1.6rem;
+      color: #000;
+      padding: 6px;
+      border-radius: 50%;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .corner-btn:hover {
+      color: #ffc107;
+    }
+
+    /* specific positions */
+    .left-corner {
+      left: 12px;
+    }
+
+    .right-corner {
+      right: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .corner-btn {
+        top: 8px;
+        font-size: 1.4rem;
+        padding: 5px;
+      }
+
+      .left-corner {
+        left: 8px;
+      }
+
+      .right-corner {
+        right: 8px;
+      }
+    }
+  </style>
+
+  </style>
+</head>
+
+<body>
+  <!-- Left corner button -->
+  <a href="{% url 'login' %}" class="corner-btn left-corner" aria-label="Back to login">
+    <i class="bi bi-arrow-left-circle-fill"></i>
+  </a>
+
+  <!-- Right corner button -->
+  <a href="{% url 'item_view' %}" class="corner-btn right-corner" aria-label="Next">
+    <i class="bi bi-arrow-right-circle-fill"></i>
+  </a>
+</body>
+
+
+<div class="page-wrapper">
+  <div class="card shadow-lg">
+    <div class="card-header bg-dark text-white text-center">
+      <h3 class="mb-0 p-3">Add New Dress</h3>
+    </div>
+
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label">Dress Name</label>
+          <input type="text" name="item_name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Upload Image</label>
+          <input type="file" name="item_image" class="form-control" accept="image/*" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea name="item_description" rows="3" class="form-control" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Price (₹)</label>
+          <input type="number" step="0.01" name="item_price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <select name="gender" class="form-select" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Quantity</label>
+          <input type="number" name="quantity" class="form-control" value="1" min="1" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Size</label>
+          <select name="size_chart" class="form-select" required>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Color</label>
+          <input type="text" name="color" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Available From</label>
+          <input type="date" name="available_from" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Available To</label>
+          <input type="date" name="available_to" class="form-control" required>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-success">Save Dress</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

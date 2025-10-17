@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in cart_items %}
+    <tr>
+      <td>{{ i.product.item_name }}</td>
+      <td>₹{{ i.product.item_price }}</td>
+      <td>
+        <a href="/remove?cid={{ i.id }}" class="btn btn-danger btn-sm">Remove</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

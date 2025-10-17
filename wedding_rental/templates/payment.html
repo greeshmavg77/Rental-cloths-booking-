@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<style>
+    .table thead th {
+        text-align: center;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 2rem;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 2rem;
+        text-decoration: none;
+        color: #000000;
+        z-index: 1000;
+    }
+
+    .back-btn:hover {
+        color: #ffc107;
+    }
+    a{
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<body>
+    <a href="{% url 'view_cart' %}" class="back-btn">
+        <i class="bi bi-arrow-left-circle-fill"></i>
+    </a>
+    <div class="container py-5">
+
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-body">
+                <h2 class="mb-4 text-center text-success">Buy Now</h2>
+
+                <table class="table table-bordered table-hover bg-white">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price (₹)</th>
+                            <th>Total (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for line in lines %}
+                        <tr>
+                            <td>{{ line.product.item_name }}</td>
+                            <td>{{ line.qty }}</td>
+                            <td>₹{{ line.unit_price }}</td>
+                            <td>₹{{ line.line_total }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr class="fw-bold bg-light">
+                            <td colspan="3" class="text-end">Grand Total</td>
+                            <td>₹{{ grand_total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-end mt-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-lg px-4"><a href="{% url 'success' %}">Place Order</a>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
